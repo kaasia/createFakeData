@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<!-- Bootstrap 核心 CSS 文件 -->
+<link href="../static/bootstrap/3.3.5/css/bootstrap.min.css" title="" rel="stylesheet" />
+<link rel="stylesheet" href="../static/AdminLTE/2.3.6/plugins/font-awesome/font-awesome.min.css">
+<script src="../static/jquery/jquery-3.1.1.min.js"></script>
+<script src="../static/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../static/echarts/echarts.min.js"></script>
+<style>
+</style>
+<script type="text/javascript">
+//创建指定范围个数的随机数据
+function createAutoData(count,max,min){
+	var autoData = new Array();
+	var Range = max - min;
+	for(var i=0;i<count;i++){
+		var Rand = Math.random();   
+		autoData.push(min + Math.round(Rand * Range));   
+	}
+	return autoData;
+}
+function createEcharts(){
+	var myChart = echarts.init(document.getElementById('main'), 'default');
+	var option = {
+		    title: {
+		        text: ''
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		       data:[]
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: ['12:10','12:20','12:30','12:40','12:50','13:00','13:10']
+		    },
+		    yAxis: {
+		        type: 'value',
+		        axisLabel: {
+		                formatter: '{value} ms'
+		            },
+		        splitNumber:10
+		    },
+		    series: []
+		};
+	
+		myChart.setOption(option);
+		
+		for(var i=0;i<5;i++){
+			var autoData = createAutoData(7,50,10);
+			console.log(autoData);
+			option.legend.data.push('test'+i);
+			option.series.push({
+		        name: 'test'+i,                            // 系列名称
+		        type: 'line',                           // 图表类型，折线图line、散点图scatter、柱状图bar、饼图pie、雷达图radar
+		        data: autoData,
+		        smooth:true
+			});
+			myChart.setOption(option);
+		}
+}
+</script>  
+</head>
+<body onload="createEcharts()">
+<div id="main" style="height:200px;width:700px;"></div>
+</body>
+
+</html>
